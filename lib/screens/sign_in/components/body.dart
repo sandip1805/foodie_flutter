@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:foodie_flutter_app/components/rounded_button.dart';
 import 'package:foodie_flutter_app/constants.dart';
 import 'package:foodie_flutter_app/screens/home/home_screen.dart';
 import 'package:foodie_flutter_app/screens/sign_up/sign_up_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -171,8 +171,28 @@ class _BodyState extends State<Body> {
                     height: size.height * 0.05,
                   ),
                   Container(
-                    child: SignInButton(
-                      Buttons.Google,
+                    width: size.width * 0.95,
+                    height: size.height * 0.08,
+                    child: TextButton.icon(
+                      icon: Icon(
+                        FontAwesome.google,
+                        color: Colors.white,
+                      ),
+                      label: Text(
+                        'Sign In with Google',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      style: TextButton.styleFrom(
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(48),
+                        ),
+                        backgroundColor: Colors.blue,
+                      ),
                       onPressed: () {
                         print('Google');
                         signInWithGoogle().then((result) {

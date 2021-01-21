@@ -14,13 +14,8 @@ ThemeData theme() {
 
 TextTheme textTheme() {
   return TextTheme(
-    bodyText1: TextStyle(
-      color: kTextColor
-    ),
-    bodyText2: TextStyle(
-      color: kTextColor
-    )
-  );
+      bodyText1: TextStyle(color: kTextColor),
+      bodyText2: TextStyle(color: kTextColor));
 }
 
 AppBarTheme appBarTheme() {

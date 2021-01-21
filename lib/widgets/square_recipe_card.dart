@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:foodie_flutter_app/models/recipe_model.dart';
@@ -14,64 +16,70 @@ class SquareRecipeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          buildLeftColumn(size),
+          buildRightColumn(context, size),
+        ],
+      ),
+    );
+  }
+
+  GestureDetector buildRightColumn(BuildContext context, Size size) {
     return GestureDetector(
       onTap: () {
         context.read<RecipeModel>().setRecipe(recipe);
         Navigator.pushNamed(context, RecipeDetails.ID);
       },
       child: Container(
-        margin: const EdgeInsets.only(right: 20),
-        width: 250,
+        width: size.width * 0.65,
+        height: 200,
         child: Card(
-          elevation: 5.0,
+          elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: Stack(
             children: [
-              Expanded(
-                flex: 3,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                  child: Hero(
-                    tag: 'recipeImage' + recipe['id'].toString(),
-                    child: Image(
-                      width: 250,
-                      image: recipe['image'] == null
-                          ? AssetImage(
-                              'assets/images/pexels-surabhi-siddaiah-1051399.jpg')
-                          : CachedNetworkImageProvider(
-                              recipe['image'],
-                            ),
-                      fit: BoxFit.fitWidth,
-                    ),
+              ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                child: Hero(
+                  tag: 'recipeImage' + recipe['id'].toString(),
+                  child: Image(
+                    width: size.width * 0.65,
+                    height: 200,
+                    image: recipe['image'] == null
+                        ? AssetImage(
+                            'assets/images/pexels-surabhi-siddaiah-1051399.jpg')
+                        : CachedNetworkImageProvider(
+                            recipe['image'],
+                          ),
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
-              Expanded(
-                flex: 1,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 10,
-                    left: 16,
-                  ),
-                  child: Text(
-                    recipe['title'],
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 10,
+                  left: 16,
+                ),
+                child: Text(
+                  recipe['title'],
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              Expanded(
-                flex: 1,
+              Positioned(
+                top: 34,
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 16,
@@ -82,11 +90,99 @@ class SquareRecipeCard extends StatelessWidget {
                     recipe['summary'],
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Container buildLeftColumn(Size size) {
+    return Container(
+      height: 200,
+      width: size.width * 0.2,
+      decoration: BoxDecoration(
+        color: Color(0xff262523),
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                text: recipe['readyInMinutes'].toString(),
+                style: TextStyle(
+                  color: Color(0xffD97904),
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+                children: [
+                  TextSpan(
+                    text: '\nmin',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                text: recipe['servings'].toString(),
+                style: TextStyle(
+                  color: Color(0xffD97904),
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+                children: [
+                  TextSpan(
+                    text: '\nserve',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                text: (Random().nextInt(10) + 1).toString(),
+                style: TextStyle(
+                  color: Color(0xffD97904),
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+                children: [
+                  TextSpan(
+                    text: '\nsteps',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

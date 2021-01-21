@@ -1,9 +1,0 @@
-enum Course {
-  BREAKFAST,
-  SALADS,
-  STARTERS,
-  BEVERAGES,
-  SOUPS,
-  MAIN_COURSE,
-  DESSERTS,
-}

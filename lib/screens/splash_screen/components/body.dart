@@ -4,6 +4,7 @@ import 'package:foodie_flutter_app/constants.dart';
 import 'package:foodie_flutter_app/screens/sign_in/sign_in_screen.dart';
 import 'package:foodie_flutter_app/screens/splash_screen/components/splash_content.dart';
 import 'package:foodie_flutter_app/size_config.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -33,11 +34,19 @@ class _BodyState extends State<Body> {
     return SafeArea(
       child: Column(
         children: [
-          SizedBox(
-            height: size.height * 0.05,
+          Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: Text(
+              "Foodie",
+              style: GoogleFonts.nunito(
+                fontSize: 72,
+                color: Colors.black87,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
-          Expanded(
-            flex: 4,
+          Container(
+            height: size.height * 0.6,
             child: PageView.builder(
               onPageChanged: (value) => {
                 setState(
@@ -53,30 +62,27 @@ class _BodyState extends State<Body> {
               ),
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(
-                    splashData.length,
-                    (index) => buildDot(index: index),
-                  ),
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  splashData.length,
+                  (index) => buildDot(index: index),
                 ),
-                SizedBox(
-                  height: getProportionateScreenHeight(25),
-                ),
-                RoundedButton(
-                  width: size.width * 0.8,
-                  height: size.height * 0.08,
-                  onPressed: () => {
-                    Navigator.pushNamed(context, SignInScreen.ID),
-                  },
-                  label: 'Get Started',
-                ),
-              ],
-            ),
+              ),
+              SizedBox(
+                height: getProportionateScreenHeight(25),
+              ),
+              RoundedButton(
+                width: size.width * 0.8,
+                height: size.height * 0.08,
+                onPressed: () => {
+                  Navigator.pushNamed(context, SignInScreen.ID),
+                },
+                label: 'Get Started',
+              ),
+            ],
           ),
         ],
       ),
